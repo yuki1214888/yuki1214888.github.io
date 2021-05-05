@@ -1,8 +1,26 @@
 <!DOCTYPE html>
 <html>
 
-  <script type="text/javascript" src="./htmlToExcel.js">
-  </script>
+  <script 
+    src="https://code.jquery.com/jquery-3.6.0.js" 
+    integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" 
+    crossorigin="anonymous"></script>
+
+<script>
+function SubForm (){
+    $.ajax({
+        url:'https://script.google.com/macros/s/AKfycbw6NNYq7aRZLF3KIOsMZQUkr4V3iosDwPm452CS1pm7h3NpyeOX4cHEepoEHxl9PxEeyA/exec',
+        type:'post',
+        data:$("#myForm").serializeArray(),
+        success: function(){
+          alert("Form Data Submitted :)")
+        },
+        error: function(){
+          alert("There was an error :(")
+        }
+    });
+}
+</script>
 
 <body>
   <h2 align="center">北醫附醫孩童發育健康問卷調查年度追蹤問卷</h2>
@@ -82,8 +100,7 @@
     <input type="reset" value="重填">
     
   </form>
-  <input id="exportExcel" type="button" value="导出EXCEL"
-    onclick="javascript:exportExcel('myForm')" />
+  <button onclick="SubForm()">Submit</button>
 </body>
 
 </html>
