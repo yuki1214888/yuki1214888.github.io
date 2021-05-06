@@ -30,7 +30,7 @@
 
   <br/> 
   <h2 align="center">北醫附醫孩童發育健康問卷調查年度追蹤問卷</h2>
-  <form onsubmit="alert('您輸入的資料皆正確，請按送出');">
+  <form onsubmit="alert('您輸入的資料皆正確，已送出');">
   
     <p align="center">日期(西元)：<input id="bday" type="date" style="width:150px;">
           	姓名：<input id="name"type="text" style="width:75px;"required >
@@ -96,9 +96,9 @@
    
     
   
-  	<p><button style="width:150px;">欄位輸入檢查</button></p>
+  	<p><button id="sendBtn" style="width:150px;">輸入檢查並送出</button></p>
 	</form>
-    <button id="sendBtn" style="width:150px;">送出</button>
+    
 
   <script>
     var appUrl = $('#appUrl'),
