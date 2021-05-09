@@ -1,152 +1,325 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
-<head>
-  <meta charset="UTF-8">
-  <title>Google app script excel</title>
-  <script src="https://code.jquery.com/jquery-1.9.1.js"></script>
-  <style>
-  input {
-    width: 300px;
-    font-size: 15px;
-    margin: 2px 0;
-    padding: 2px 5px;
-  }
-  
-  td {
-    border: 1px solid #aaa;
-    padding:2px 5px;
-  }
-  </style>
-  
-  
-</head>
+  <script src='{% static "test.js"%}'></script>
 
-<body>
-  <p style="display: none">Google App Script：<input type=hidden readonly="readonly" id="appUrl" value="https://script.google.com/macros/s/AKfycbwM7Vh1yhTkl9PdwB2qi-lLMuEq6nqj01na9WnvmQyHVi0XJWiXAVxMelg7p7ahT8kH/exec"><br/> 
-    試算表網址：<input type=hidden readonly="readonly" id="sheetsUrl" value="https://docs.google.com/spreadsheets/d/1UJA0TKx59bVAvvZlSfhbl3-K0kBgD2PAfDB6SXfIPmU/edit#gid=0"><br/>
-    工作表名稱：<input type=hidden readonly="readonly" id="sheetName" value="孩童發育健康問卷調查年度追蹤問卷"style="width:240px;"><br/>
-    寫入方式：<input type=hidden readonly="readonly" id="type" value="bottom" style="width:50px;"></p>
 
-  <br/> 
-  <h2 align="center">北醫附醫孩童發育健康問卷調查年度追蹤問卷</h2>
-  <form onsubmit="alert('您輸入的資料皆正確，已送出');">
-  
-    <p align="center">日期(西元)：<input id="bday" type="date" style="width:150px;">
-          	姓名：<input id="name"type="text" style="width:75px;"required >
-	          案號：TPLS_<input id="number" type="text" style="width:75px;"required pattern="[0-9a-z]{4,5}"></p>
-   <h4>【第一部份】家族健康情況</h4> 
-   
-          1.請問孩童父親目前的：身高：<input type="number" id="part1_1_height"style="width:60px;"min="100" max="210">公分    體重：<input type="number" id="part1_1_weight"style="width:60px;" min="10" max="150">公斤
-      <br>2.請問孩童母親目前的：身高：<input type="number" id="part1_2_height"style="width:60px;"min="100" max="210">公分    體重：<input type="number" id="part1_2_weight"style="width:60px;" min="10" max="150">公斤
-      <br>3.請問母親初經年齡為：<input type="number" id="part1_3"style="width:60px;" min="0" max="50">歲
-	  <br>
-      <br>4-A.您的這位孩子最近一年有無使用中草藥來幫助青春期發育?
-      <input type="radio" id="part1_4_A.1" name="part1_4_A" value="0"style="width:15px;">0.無（請跳至下一大題作答）
-      <input type="radio" id="part1_4_A.2" name="part1_4_A" value="1"style="width:15px;">1.有(請續答4-B、4-C 小題)
-	    <br>4-B.您的這位孩子所使用的為何種中草藥? (使用最多者，單選)
-	  <br>
-	    <input type="radio" id="part1_4_B.1" name="part1_4_B" value="1" style="width:15px;"> 1.知柏地黃丸
-      <input type="radio" id="part1_4_B.2" name="part1_4_B" value="2" style="width:15px;"> 2.加味逍遙散
-      <input type="radio" id="part1_4_B.3" name="part1_4_B" value="3" style="width:15px;"> 3.龍膽瀉肝丸
-      <input type="radio" id="part1_4_B.4" name="part1_4_B" value="4" style="width:15px;"> 4.蒼耳子散
-	  <br>
-	    <input type="radio" id="part1_4_B.5" name="part1_4_B" value="5" style="width:15px;"> 5.香砂六君子湯
-      <input type="radio" id="part1_4_B.6" name="part1_4_B" value="6" style="width:15px;"> 6.溫膽湯
-      <input type="radio" id="part1_4_B.7" name="part1_4_B" value="7" style="width:15px;"> 7.大青龍湯
-      <input type="radio" id="part1_4_B.8" name="part1_4_B" value="8" style="width:15px;"> 8.六君子湯
-    <br>
-	    <input type="radio" id="part1_4_B.9" name="part1_4_B" value="9" style="width:15px;"> 9.半夏瀉心湯
-      <input type="radio" id="part1_4_B.10" name="part1_4_B" value="10" style="width:15px;"> 10.麻子仁丸
-      <input type="radio" id="part1_4_B.11" name="part1_4_B" value="11" style="width:15px;"> 11.不清楚何種中草藥
-      <input type="radio" id="part1_4_B.12" name="part1_4_B" value="12" style="width:15px;"> 12.其它<input type="text" id="part1_4_B_12" style="width:60px;">
-	  
-	  <br>
-	    <p>5.氣喘病</p>A_在過去12個月內，您的這位孩子曾經有過呼吸困難，胸部出現喘鳴並伴有咻咻聲嗎?
-	   <input type="radio" id="part1_5_A.1" name="part1_5_A" value="0" style="width:15px;">0.否
-	    <input type="radio" id="part1_5_A.2" name="part1_5_A" value="1" style="width:15px;">1.是(請作答A-1)
-	    <br>5A-1. 請問最近12月內總共發生多少次？
-	  <br>
-	    <input type="radio" id="part1_5_A-1.1" name="part1_5_A-1" value="1" style="width:15px;">1.一～三次
-      <input type="radio" id="part1_5_A-1.2" name="part1_5_A-1" value="2" style="width:15px;">2.四-十二次
-      <input type="radio" id="part1_5_A-1.3" name="part1_5_A-1" value="3" style="width:15px;">3.十三次或以上
-	  <br>5B.在過去12個月內，您的孩子是否經醫生診斷患有「氣喘病」？
-	    <input type="radio" id="part1_5_B.1" name="part1_5_B" value="0" style="width:15px;">0.否(請跳至6_異位性皮膚炎)
-	    <input type="radio" id="part1_5_B.2" name="part1_5_B" value="1" style="width:15px;">1.是(請繼續作答)
-	    <br>5B-1.過去12個月內，您的這位孩子是否服用以下任何藥劑治療氣喘?(可複選)
-	  <br>
-	    <input type="checkbox" id="part1_5_B-1.1" name="part1_5_B-1" value="1" style="width:15px;">1.抗生素，錠劑或注射
-      <input type="checkbox" id="part1_5_B-1.2" name="part1_5_B-1" value="2" style="width:15px;">2.吸入式藥劑
-      <input type="checkbox" id="part1_5_B-1.3" name="part1_5_B-1" value="3" style="width:15px;">3.類固醇，錠劑或注射(例如:脫氧皮質醇)
-	  <br>
-	    <input type="checkbox" id="part1_5_B-1.4" name="part1_5_B-1" value="4" style="width:15px;">4.其他藥劑<input type="text" id="part1_5_B-1_4" style="width:60px;">(請詳細敘述)
-      <input type="checkbox" id="part1_5_B-1.5" name="part1_5_B-1" value="5" style="width:15px;">5.沒有使用氣喘藥劑
-      <br>5B-2.您的這位孩子，最近一次服用氣喘藥物是什麼時候?
-	  <br>
-	    <input type="radio" id="part1_5_B-2.1" name="part1_5_B-2" value="1" style="width:15px;"> 1.過去12個月內
-      <input type="radio" id="part1_5_B-2.2" name="part1_5_B-2" value="2" style="width:15px;"> 2.1-2年前  (1年＜ 時間 ≦ 2年)
-      <br>
-	    <input type="radio" id="part1_5_B-2.3" name="part1_5_B-2" value="3" style="width:15px;"> 3.2-3年前  (2年＜ 時間 ≦ 3年) 
-      <input type="radio" id="part1_5_B-2.4" name="part1_5_B-2" value="4" style="width:15px;"> 4.3-4年前  (3年＜ 時間 ≦ 4年)
-	  <br>
-	    <input type="radio" id="part1_5_B-2.5" name="part1_5_B-2" value="5" style="width:15px;"> 5.4-5年前  (4年＜ 時間 ≦ 5年)
-      <input type="radio" id="part1_5_B-2.6" name="part1_5_B-2" value="6" style="width:15px;"> 6.久於5年之前
-   
-   
-   
-    
-  
-  	<p><button id="sendBtn" style="width:150px;">輸入檢查並送出</button></p>
-	</form>
-    
+<style type="text/css">
+	
+	
+	.menu {
+     height: 100vw;
+     width: 25vw;
+     background-color: #ffecf5;
+     float: left;
+	}
+	
+	.menu .title span {
+     font-size: 2em;
+     color: #ffffff;
+     margin-left: 20px;
+	}
 
-  <script>
-    var appUrl = $('#appUrl'),
-    sheetsUrl = $('#sheetsUrl'),
-    sheetName = $('#sheetName'),
-    type = $('#type'),
-    sendBtn = $('#sendBtn'),
-    show = $('#show'),
-	  a1 = $('#bday'),
-	  a2 = $('#name'),
-	  a3 = $('#number');
-	  a4 = $('#part1_1_height');
-	  a5 = $('#part1_1_weight');
-	  a6 = $('#part1_2_height');
-	  a7 = $('#part1_2_weight');
-	  a8 = $('#part1_3');
-	  a9 = $('input[name=part1_4_A]');
-    //a10 = $('#part1_4_B:checked');
-    //a10 =$("input[part1_4_B]:checked");
-    //取得選到的 radio 值：$("input[name=radioName]:checked").val();
-	  a10 = $('input[name=part1_4_B]');
-	  a11 = $('input[name=part1_4_B_12]');
-	  a12 = $('input[name=part1_5_A]');
-	  a13 = $('input[name=part1_5_A-1]');
-	  a14 = $('input[name=part1_5_B]');
-	  a15 = $('input[name=part1_5_B-1]');
-	  a16 = $('input[name=part1_5_B-1_4]');
-	  a17 = $('input[name=part1_5_B-2]');
+	.menu .title .imgStyle {
+	 width: 50px;
+	}
+	
+		
+	.menu ul li {
+		list-style-type:none;
+		font-size: 1.2em;
+    	width: 100%;
+		height: 100%;
+    	padding: 10px 30px;
+    	transition: 0.25s;
+		border:none;
+		background-color: transparent;
+		color: #fff;
+		
+	}
+	
+	.menu ul li:hover {
+     background-color: #ffa6ff;
+     color: #4a4a4a;
+	}
 	
 
-    var parameter = {};
-  
-    sendBtn.on('click', function() {
-      var data = [[a1.val(),a2.val(),a3.val(),a4.val(),a5.val(),a6.val(),a7.val(),a8.val(),a9.filter(":checked").val(),a10.filter(":checked").val()
-                  ,a11.filter(":checked").val(),a12.filter(":checked").val(),a13.filter(":checked").val(),a14.filter(":checked").val()
-                  ,a15.filter(":checked").map(function() { return $(this).val(); }).get().join('、'),a16.filter(":checked").val(),a17.filter(":checked").val()]];
-    parameter = {
-      url: sheetsUrl.val(),
-      name: sheetName.val(),
-      data: data.toString(),
-      row: data.length,
-      column: data[0].length,
-      insertType: type.val()
-    };
-    $.get(appUrl.val(), parameter);
-  });
-  </script>
- 
-</body>
+	
+	.title {
+	 padding: 20px 15px;
+     background-color: #5b01ae;
+	}
+	
+	.content {
+     width: 100vw;
+     height: 100vh;
+     background-color: white;
+	}	
+	
+	.content .banner {
+	 text-align:center;
+     width: 100%;/*設定寬度為100%*/
+     height: 150px;
+     background-color: #ca8eff;
+	}
+	
+	.content .news{
+	 height: 85%;
+	 /*顯示他的區塊範圍*/
+	 background-color: white;
+	}
+	
+	/* Border styles */
+	.table-4 thead, .table-4 tr {
+	border-top-width: 1px;
+	border-top-style: solid;
+	border-top-color: rgb(211, 202, 221);
+	}
+	.table-4 {
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: rgb(211, 202, 221);
+	}
 
-</html>
+	/* Padding and font style */
+	.table-4 td, .table-4 th {
+	padding: 5px 10px;
+	font-size: 12px;
+	font-family: Verdana;
+	color: rgb(95, 74, 121);
+	}
+
+	/* Alternating background colors */
+	.table-4 tr:nth-child(even) {
+	background: rgb(223, 216, 232)
+	}
+	.table-4 tr:nth-child(odd) {
+	background: #FFF
+	}
+</style>
+
+<html>
+
+	<head>
+		<title>第2組</title>
+	</head>
+	
+	<body>
+
+			<div class="menu">
+			<div class="title">
+				<span>問卷</span>
+			</div>
+			<ul class="nav nav-tabs">
+				<li><a data-toggle="tab" href="#home">【第一部份】家族健康情況</a></li>
+				<li><a data-toggle="tab" href="#menu1">【第二部份】家族健康情況</a></li>
+				<li><a data-toggle="tab" href="#menu2">【第三部份】</a></li>
+				<li><a data-toggle="tab" href="#menu3">【第四部份】</a></li>
+				<li><a data-toggle="tab" href="#menu4">【第五部份】</a></li>
+				<li><a data-toggle="tab" href="#menu5">【第六部份】</a></li>
+				<li><a data-toggle="tab" href="#menu6">【第七部份】</a></li>
+				<li><a data-toggle="tab" href="#menu7">【第八部份】</a></li>
+				<li><a data-toggle="tab" href="#menu8">【第九部份】</a></li>
+				<center><button id="sendBtn" style="width:150px;">輸入檢查並送出</button></center>
+				<br>
+			</ul>
+			
+			
+			</div>
+			
+		<form>
+			<p style="display: none">Google App Script：<input readonly="readonly" id="appUrl" value="https://script.google.com/macros/s/AKfycbzoKEzlHUsglYsBP3TGwmZ54sVA7LMnMHS0WAklfnThe4B41vphcztzMoNKAW70Fv30/exec"><br/> 
+				試算表網址：<input readonly="readonly" id="sheetsUrl" value="https://docs.google.com/spreadsheets/d/1UJA0TKx59bVAvvZlSfhbl3-K0kBgD2PAfDB6SXfIPmU/edit#gid=0"><br/>
+				工作表名稱：<input readonly="readonly" id="sheetName" value="孩童發育健康問卷調查年度追蹤問卷"style="width:240px;"><br/>
+				寫入方式：<input  readonly="readonly" id="type" value="bottom" style="width:50px;"></p>
+			
+			<div class="content">
+			<div class="banner">
+			<br>
+			<h2>孩童發育健康問卷調查年度追蹤問卷-家長</h2>
+			<p align="center">日期(西元)：<input id="bday" type="date" style="width:150px;">
+				姓名：<input id="name" type="text" style="width:75px;" >
+				案號：TPLS_<input id="number" type="text" style="width:75px;" pattern="[0-9a-zA-Z]{4,5}" placeholder="c0001"></p>
+			<br>
+			</div>
+
+			<!--------------------看這裡------------------->
+			<div class="news">
+			  	<div class="tab-content">
+						<div id="home" class="tab-pane fade in active">
+						<h3>【第一部份】家族健康情況</h3>
+							1.請問孩童父親目前的：身高：<input type="number" id="part1_1_height"style="width:80px;" placeholder="100~210">公分    體重：<input type="number" id="part1_1_weight"style="width:80px;" placeholder="10~150">公斤
+							<br>2.請問孩童母親目前的：身高：<input type="number" id="part1_2_height"style="width:80px;" placeholder="100~210">公分    體重：<input type="number" id="part1_2_weight"style="width:80px;" placeholder="10~150">公斤
+							<br>3.請問母親初經年齡為：<input type="number" id="part1_3"style="width:60px;">歲
+							<br>
+							<br>4-A.您的這位孩子最近一年有無使用中草藥來幫助青春期發育?
+							<input type="radio" id="part1_4_A.1" name="part1_4_A" value="0"style="width:15px;">0.無（請跳至下一大題作答）
+							<input type="radio" id="part1_4_A.2" name="part1_4_A" value="1"style="width:15px;">1.有(請續答4-B、4-C 小題)
+							  <br>4-B.您的這位孩子所使用的為何種中草藥? (使用最多者，單選)
+							<br>
+							  <input type="radio" id="part1_4_B.1" name="part1_4_B" value="1" style="width:15px;"> 1.知柏地黃丸
+							<input type="radio" id="part1_4_B.2" name="part1_4_B" value="2" style="width:15px;"> 2.加味逍遙散
+							<input type="radio" id="part1_4_B.3" name="part1_4_B" value="3" style="width:15px;"> 3.龍膽瀉肝丸
+							<input type="radio" id="part1_4_B.4" name="part1_4_B" value="4" style="width:15px;"> 4.蒼耳子散
+							<br>
+							  <input type="radio" id="part1_4_B.5" name="part1_4_B" value="5" style="width:15px;"> 5.香砂六君子湯
+							<input type="radio" id="part1_4_B.6" name="part1_4_B" value="6" style="width:15px;"> 6.溫膽湯
+							<input type="radio" id="part1_4_B.7" name="part1_4_B" value="7" style="width:15px;"> 7.大青龍湯
+							<input type="radio" id="part1_4_B.8" name="part1_4_B" value="8" style="width:15px;"> 8.六君子湯
+						  <br>
+							  <input type="radio" id="part1_4_B.9" name="part1_4_B" value="9" style="width:15px;"> 9.半夏瀉心湯
+							<input type="radio" id="part1_4_B.10" name="part1_4_B" value="10" style="width:15px;"> 10.麻子仁丸
+							<input type="radio" id="part1_4_B.11" name="part1_4_B" value="11" style="width:15px;"> 11.不清楚何種中草藥
+							<input type="radio" id="part1_4_B.12" name="part1_4_B" value="12" style="width:15px;"> 12.其它<input type="text" id="part1_4_B_12" style="width:60px;">
+							
+							<br>
+							  <p>5.氣喘病</p>A_在過去12個月內，您的這位孩子曾經有過呼吸困難，胸部出現喘鳴並伴有咻咻聲嗎?
+							 <input type="radio" id="part1_5_A.1" name="part1_5_A" value="0" style="width:15px;">0.否
+							  <input type="radio" id="part1_5_A.2" name="part1_5_A" value="1" style="width:15px;">1.是(請作答A-1)
+							  <br>5A-1. 請問最近12月內總共發生多少次？
+							<br>
+							  <input type="radio" id="part1_5_A-1.1" name="part1_5_A-1" value="1" style="width:15px;">1.一～三次
+							<input type="radio" id="part1_5_A-1.2" name="part1_5_A-1" value="2" style="width:15px;">2.四-十二次
+							<input type="radio" id="part1_5_A-1.3" name="part1_5_A-1" value="3" style="width:15px;">3.十三次或以上
+							<br>5B.在過去12個月內，您的孩子是否經醫生診斷患有「氣喘病」？
+							  <input type="radio" id="part1_5_B.1" name="part1_5_B" value="0" style="width:15px;">0.否(請跳至6_異位性皮膚炎)
+							  <input type="radio" id="part1_5_B.2" name="part1_5_B" value="1" style="width:15px;">1.是(請繼續作答)
+							  <br>5B-1.過去12個月內，您的這位孩子是否服用以下任何藥劑治療氣喘?(可複選)
+							<br>
+							  <input type="checkbox" id="part1_5_B-1.1" name="part1_5_B-1" value="1" style="width:15px;">1.抗生素，錠劑或注射
+							<input type="checkbox" id="part1_5_B-1.2" name="part1_5_B-1" value="2" style="width:15px;">2.吸入式藥劑
+							<input type="checkbox" id="part1_5_B-1.3" name="part1_5_B-1" value="3" style="width:15px;">3.類固醇，錠劑或注射(例如:脫氧皮質醇)
+							<br>
+							  <input type="checkbox" id="part1_5_B-1.4" name="part1_5_B-1" value="4" style="width:15px;">4.其他藥劑<input type="text" id="part1_5_B-1_4" style="width:60px;">(請詳細敘述)
+							<input type="checkbox" id="part1_5_B-1.5" name="part1_5_B-1" value="5" style="width:15px;">5.沒有使用氣喘藥劑
+							
+							
+						</div>
+						<div id="menu1" class="tab-pane fade">
+							<h3>【第二部份】家族健康情況</h3>
+							<br>5B-2.您的這位孩子，最近一次服用氣喘藥物是什麼時候?
+							<br>
+							  <input type="radio" id="part1_5_B-2.1" name="part1_5_B-2" value="1" style="width:15px;"> 1.過去12個月內
+							<input type="radio" id="part1_5_B-2.2" name="part1_5_B-2" value="2" style="width:15px;"> 2.1-2年前  (1年＜ 時間 ≦ 2年)
+							<br>
+							  <input type="radio" id="part1_5_B-2.3" name="part1_5_B-2" value="3" style="width:15px;"> 3.2-3年前  (2年＜ 時間 ≦ 3年) 
+							<input type="radio" id="part1_5_B-2.4" name="part1_5_B-2" value="4" style="width:15px;"> 4.3-4年前  (3年＜ 時間 ≦ 4年)
+							<br>
+							  <input type="radio" id="part1_5_B-2.5" name="part1_5_B-2" value="5" style="width:15px;"> 5.4-5年前  (4年＜ 時間 ≦ 5年)
+							<input type="radio" id="part1_5_B-2.6" name="part1_5_B-2" value="6" style="width:15px;"> 6.久於5年之前
+							
+						</div>
+						<div id="menu2" class="tab-pane fade">
+							<h3>【第三部份】家族健康情況</h3>
+							
+						</div>
+						<div id="menu3" class="tab-pane fade">
+							<h3>【第四部份】家族健康情況</h3>
+							
+						</div>
+						<div id="menu4" class="tab-pane fade">
+							<h3>【第五部份】家族健康情況</h3>
+							
+						</div>
+						<div id="menu5" class="tab-pane fade">
+							<h3>【第六部份】家族健康情況</h3>
+							
+						</div>
+						<div id="menu6" class="tab-pane fade">
+							<h3>【第七部份】家族健康情況</h3>
+							
+						</div>
+						<div id="menu7" class="tab-pane fade">
+							<h3>【第八部份】家族健康情況</h3>
+							
+						</div>
+						<div id="menu8" class="tab-pane fade">
+							<h3>【第九部份】家族健康情況</h3>
+							
+							
+						</div>
+					</div>  
+			</div>
+						<!--------------------看這裡------------------->
+						
+								
+			</div>
+		</form>
+		
+		<script>
+			var appUrl = $('#appUrl'),
+			sheetsUrl = $('#sheetsUrl'),
+			sheetName = $('#sheetName'),
+			type = $('#type'),
+			sendBtn = $('#sendBtn'),
+			show = $('#show'),
+			  a1 = $('#bday'),
+			  a2 = $('#name'),
+			  a3 = $('#number');
+			  a4 = $('#part1_1_height');
+			  a5 = $('#part1_1_weight');
+			  a6 = $('#part1_2_height');
+			  a7 = $('#part1_2_weight');
+			  a8 = $('#part1_3');
+			  a9 = $('input[name=part1_4_A]');
+			//a10 = $('#part1_4_B:checked');
+			//a10 =$("input[part1_4_B]:checked");
+			//取得選到的 radio 值：$("input[name=radioName]:checked").val();
+			  a10 = $('input[name=part1_4_B]');
+			  a11 = $('input[name=part1_4_B_12]');
+			  a12 = $('input[name=part1_5_A]');
+			  a13 = $('input[name=part1_5_A-1]');
+			  a14 = $('input[name=part1_5_B]');
+			  a15 = $('input[name=part1_5_B-1]');
+			  a16 = $('input[name=part1_5_B-1_4]');
+			  a17 = $('input[name=part1_5_B-2]');
+			
+			  
+			var parameter = {};
+			sendBtn.on('click', function() {
+				
+			if(a2.val()==""){
+				alert('NO NAME');
+				eval("document.name['name'].focus()"); 
+			}else if(a3.val()==""){
+				alert('NO ID')
+				eval("document.number['number'].focus()");
+			}else{
+				
+			  var data = [[a1.val(),a2.val(),a3.val(),a4.val(),a5.val(),a6.val(),a7.val(),a8.val(),a9.filter(":checked").val(),a10.filter(":checked").val()
+						  ,a11.filter(":checked").val(),a12.filter(":checked").val(),a13.filter(":checked").val(),a14.filter(":checked").val()
+						  ,a15.filter(":checked").map(function() { return $(this).val(); }).get().join('、'),a16.filter(":checked").val(),a17.filter(":checked").val()]];
+			}			  
+			parameter = {
+			  url: sheetsUrl.val(),
+			  name: sheetName.val(),
+			  data: data.toString(),
+			  row: data.length,
+			  column: data[0].length,
+			  insertType: type.val()
+			};
+			console.log(parameter)
+			console.log(appUrl.val())
+			$.get(appUrl.val(), parameter, function(){
+				alert("END!");
+				location.reload();
+			});
+			// fetch(myUrl,{
+			// 	method: 'GET',
+			// 	// body: 123,
+			// 	headers: {
+			// 		'content-type': 'application/json'
+			// 	}
+			// }).then(function(result){
+			// 	console.log(result)
+			// 	console.log('事情做完了')
+			// })
+			
+		  });
+		  </script>
+	</body>
+</html> 
